@@ -1,0 +1,5 @@
+WEDNESDAY 28 June 2017
+HEAP
+
+HEAP (memory that the computer is not using)
+

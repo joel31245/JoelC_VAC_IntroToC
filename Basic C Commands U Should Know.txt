@@ -1,0 +1,115 @@
+Apps to Learn Code. SoloLearn.
+
+
+
+Headers
+	#include <stdio.h>
+Comments 
+	// or /* ... */
+Variables
+	Integers: int (short), long
+	Decimals: float, double
+	Char
+		char c1[] = "abcd";
+		char c2[5] = {'a','b','c','d','\0'}
+	Prefixes:
+		Unsigned (only does positive values)
+		const (tells C its the same spot, same name, same value that doesnt change;
+	Arrays: indexing starts at 0.
+		(Example: int arr[] = [0,1,2,3,4];)
+		NOTE: 2 seperate arrays != to each other even if content are the same.
+			a==b returns false.
+			a==a returns true.
+			Arrays are compared via addresses not content.
+	Matrix: indexing starts at 0.
+		(Example: int mat[rows][cols]; int m[10][10]={{0}}; (filled with 0s)
+		Can display using a nested loop.
+Variable Functions
+	sizeof(var); returns size of variable in bytes.
+Pointers: Point to the same data but different vars (UPS USPS FedEx Analogy)
+Basic Math
+	+ - * / % ++ --
+	Order (PEMDAS)
+	c = (float) a / b; Typecasting, forces a to become a decimal 
+			   When a decimal is involved in division with integers, 
+			   the result is always a decimal value (float or double)
+	c = a / b; Will return a truncated version if a and b are both integers
+		   Example: 1 divided by 3 is 0.3333, but program defaults the result of 2 integers to an integers
+			    0.33333 becomes truncated to 0
+Upper level Math
+	#include <math.h> (Header)
+	NOTE: num must be a double and all functions return a double
+	cos(num), sin(num); 		returns op in radians
+	exp(num); 	    		returns e ^ power
+	log(num); pow(num,power); 	logarithm (base ten), power (base ten)
+	sqrt(num);	    		takes the square root
+
+
+----I/O----I/O----I/O----I/O----I/O----I/O----I/O----I/O----I/O----I/O----
+Input/Output
+	printf("Enter text", vars if referencing in text);
+		Referencing for vars in "Enter text"
+			"%d" digit (small integer)
+			"%ld" long digit (long)
+			"%f" float (small decimal)
+			"%lf" long float (double)
+			"%c" char
+			"%s" strings
+			"%4.2f" 4 is amount of digits in front of decimal, 2 is amount after decimal, f is var type
+	scanf("Enter text", &vars);
+		Same Referencing rules as above apply.
+
+
+------CONTROL----CONTROL----CONTROL----CONTROL----CONTROL----CONTROL------
+CONDITIONALS
+	== != > < >= <= 
+	&& (and) both must be true to return true
+	|| (or) only one has to be true to return true
+	! (not) opposite is true
+IF-ELSE
+	Construction:
+	if( conditionalStatement ){
+		// code does stuff
+	}
+	else if( differentConditionalStatement ){
+		// else if is not required for every if. 
+		// else if means do this if the conditionalStatement is false and the differentConditionalStatement is true
+	}
+	else {
+		// else is not required for every if. 
+		// else means do this if the conditionalStatement is false
+	}
+FOR LOOPS
+	Construction:
+	for (counter; counter<stopValue, counter++) {
+		// does stuff
+	}
+	NOTE: can initialize (assign value to) the counter variable in the "counter" section, CANNOT declare value in the "counter" section
+	      can be any counter boolean/comparison to end, 
+	      counter does something between iterations to reach the stop condition/comparison
+	NOTE: Pay attention to the conditional statement. ("counter<stopValue"). Failure to do so may result in an infinite loop.
+ 	!!!   Always save before running a program.   !!!
+WHILE LOOPS
+	Construction:
+	while ( conditionalStatement ){
+		// code does stuff if conditionalStatement is true.
+		// NOTE: make sure that the code changes in some way that will eventually no longer satisfy the conditionalStatement.
+			 Failure to make the change that will not satisfy the conditionalStatement will result in an infinite loop.
+LOOP CONTROLS
+	break;		breaks out of the loop ahead of the stop condition
+	continue;	immediately skips to next loop iteration
+-----FUNCTIONS----FUNCTIONS-----FUNCTIONS-----FUNCTIONS-----FUNCTIONS-----
+Normal call:
+	functionName(params)
+Creating User Defined Functions
+	Prototype/Declaration 
+		EXAMPLE "int sum(int, int);"
+		NOTE: Can move the User Defined Function above main. Does not require Declaration/Prototype.
+	After Main Create Function
+		EXAMPLE
+		int sum(int a, int b) {
+			int result = a + b;
+			return result;
+		}
+-----SORTING-----SORTING------SORTING-----SORTING------SORTING-----SORTING-----
+BUBBLE SORT

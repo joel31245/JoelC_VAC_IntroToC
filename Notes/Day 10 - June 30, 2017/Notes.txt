@@ -1,0 +1,33 @@
+LINKED LISTS
+
+
+LINKED LISTS
+struct node{
+	int data;
+	node* next;
+};
+
+n = new node; // Use Malloc in C
+n->data = 1;
+temp = n;
+head = n;
+
+n = new node; // Creating second node
+n->data = 2;
+temp->next = n; // Temp sets the 1st node to point to the second nodes
+temp = temp->next; // Moves temp up to 2nd node
+
+n = new node; // Creating third node
+n->data = 3;
+temp->next = n;
+
+...
+
+n->next = NULL; // Termination sequence
+
+
+////////////////////////////////////////////////
+List of nodes that are connected to each other.
+n goes down the list
+temp
+head stays at the beginning of the list.

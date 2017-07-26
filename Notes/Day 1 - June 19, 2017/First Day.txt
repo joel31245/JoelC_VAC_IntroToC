@@ -1,0 +1,165 @@
+
+// Hello World Example
+#include <stdio.h>
+
+
+int main() {
+
+	printf("\n\tEllo World. Its good to see you old friend...\n");
+
+	
+	int testinteger1;
+
+	printf("\n\nEnter integer:\n");
+
+	scanf("%d", &testinteger1);
+
+
+
+	printf("%d + 1 = %d \n", testinteger1, testinteger1+1);
+
+
+
+	return 0;
+
+}
+
+
+
+// Excercise 1 - Input/Output
+#include <stdio.h>
+
+
+int main() {
+
+	//printf("\n\tEllo World. Its good to see you old friend...\n");
+
+	int integer1;
+
+	int integer2;
+
+
+
+	printf("\n\nEnter integer:\n");
+
+	scanf("%d", &integer1);
+
+	scanf("%d", &integer2);
+
+
+
+	printf("The sum of %d + %d = %d \n", integer1, integer2, integer1+integer2);
+
+
+
+	return 0;
+
+}
+
+
+
+// Excercise 2 - Circle Computations
+#include <stdio.h>
+
+void
+main() {
+
+
+    
+// Declarations for circle stuff
+
+    int int1, int2, sum;
+    double radius, circumference, area;
+
+    double pi = 3.14159265;
+    
+    
+
+    // Input
+
+    printf("Enter integer 1: ");
+
+    scanf("%d", &int1);
+
+    printf("Enter integer 2: ");
+
+    scanf("%d", &int2);
+    
+    
+    printf("Enter the radius: ");
+
+    scanf("%lf", &radius);
+    
+   
+
+    // Computations for Circle
+ 
+   sum = int1+int2;
+
+    area = radius*radius*pi;
+
+    circumference = 2*radius*pi;
+
+
+
+    // Output
+
+    printf("\n The sum of %d and %d is %d", int1, int2, sum);
+
+    printf("\n The radius is %lf inches", radius);
+
+    printf("\n The area is %lf square inches", area);
+
+    printf("\n The circumference is %lf inches", circumference);
+
+ 
+}
+
+
+
+// Afternoon Excercise 1 (Swap Values) - Day 1
+
+
+#include <stdio.h>
+
+
+int main(){
+    
+ 
+   	int a, b;
+    
+    
+
+	// Inputs
+    
+	printf("Enter in a value for a: \n");
+    
+	scanf("%d", &a);
+    
+	printf("Enter in a value for b: \n");
+    
+	scanf("%d", &b);
+    
+    
+
+	// Swap Procedure
+    
+	int temporaryDump = a;
+    
+	a = b;
+    
+	b = temporaryDump;
+    
+    
+
+	// Outputs
+    
+	printf("A's new value is %d\nB's new value is %d", a,b);
+    
+    
+	return 0;
+    
+
+}
+
+

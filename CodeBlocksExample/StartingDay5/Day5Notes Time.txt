@@ -1,0 +1,65 @@
+Day5Notes Time
+
+// TIME REFERENCE
+    time_t raw_time;
+    struct tm *ptr_ts;
+
+    // to get different timeZones
+	time( &raw_time );
+	ptr_ts = gmtime ( &raw_time );
+
+    printf("Greenwich Mean Time: %2d:%2d\n",
+        ptr_ts -> tm_hour, ptr_ts -> tm_min);
+	printf("LosAngeles (PST): %2d:%2d\n",
+		ptr_ts -> tm_hour+PST, ptr_ts -> tm_min);
+	printf("Amsterdam (CET): %2d:%2d\n",
+		ptr_ts -> tm_hour+CET, ptr_ts -> tm_min);
+    printf("Houston (CST): %2d:%2d\n",
+        ptr_ts -> tm_hour+CST, ptr_ts -> tm_min);
+// TIME REFERENCE ENDS
+
+#include <stdio.h>
+#include <time.h>
+
+#define PST (-8)
+#define CET (1)
+
+int main(){
+	
+	time_t currentTime;
+	time(&currentTime);
+
+	printf("%s\n", currentTime);
+		// prints the entire thing. Date and Time. String
+
+	struct tm *myTime = localTime(&currentTime); 	// line converts the currentTime into a localTime structure
+	printf("%i\n", myTime->tm_mon +1); // prints only month (integer), months are 0 based
+
+	// to get different timeZones
+	myTime = gmtime ( &raw_time ); // GMT
+	printf("LosAngeles (PST): %2d:%2d\n",
+		myTime -> tm_hour+PST, myTime -> tm_min);
+	printf("Amsterdam (CET): %2d:%2d\n",
+		myTime -> tm_hour+CEI, myTime -> tm_min);
+	
+	// m/d/y
+	printf("%i/%i/%i\n", myTime->tm_mon +1, myTime->tm_mday, myTime->tm_year +1900);
+		// tm_mon = month January is 0
+		// tm_mday = day in the month
+		// tm_year = 1900 is 0 for the year
+
+
+	// TO TEST HOW LONG AN OPERATION TO TAKE
+	
+
+	/* Operation */	
+	
+	int ticks = clock();
+		// clock() starts when you run program.
+	printf("%f", (float)ticks / COLCKS_PER_SEC);
+	
+	return 0;
+}
+
+
+

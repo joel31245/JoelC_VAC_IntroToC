@@ -1,0 +1,18 @@
+char are basically ints based on the ASCII table (hexadecimal [address] -> binary number) which is directly manipulated by int
+Strings in C are set thru pointers.
+	char *p;
+	p = "The game is afoot!";
+	printf(p);
+The pointer points to the first letter's address. String is treated like an array of chars.
+
+Adding one to a string will just delete the first letter and so forth.
+*p is also known as "String Literal"
+You are not allowed to change String Literals once they are set. 
+
+STRING BUFFERS:
+The actual thing holding the string is a buffer (usually much longer than the string can be)
+	char buffer[1024];
+	strcpy( buffer, "SHORT String" );
+	strcat( buffer, " MADE Longer");
+	strToLower( buffer );
+Notice buffer is itself a variable and not a pointer. buffer can be manipulated. the stuff on the right (the actual strings) cannot be changed once set.

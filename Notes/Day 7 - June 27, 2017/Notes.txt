@@ -1,0 +1,5 @@
+Abstraction (Video):
+Doesn't matter what happens under the hood. Cares only the io to user. (functions of header) 
+Doesn't matter what the actual functions do or how you solve the problem using the 
+functions. 
+Reading from files

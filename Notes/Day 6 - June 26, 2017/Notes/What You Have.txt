@@ -1,0 +1,49 @@
+#include <stdio.h>
+#include <string.h>
+
+void sort(char *word[30][100], int n);
+
+int main()
+{
+    // Get the inputs
+    printf("Enter value of n: ");
+    int n;
+    scanf("%d",&n);
+
+
+    int i;
+    char word[30][100];
+
+    for(i=0; i<n; i++){
+        printf(" Enter word no. %d: \n",i+1);
+        gets(word[i]);
+    }
+
+    sort(&word, n);
+
+    // Display the array
+    for(i=0; i<n; i++)
+        puts(word[i]);
+
+    return 0;
+}
+
+void sort(char *word[30][100], int n){
+
+    int w1, w2,i;
+    char *temp[100];
+
+
+    for(w1=0; w1<n; w1++){
+        for(w2=w1+1; w2<n-1; w2++){
+            if( *word[w1][0] > *word[w2][0] ){
+                strcpy(*temp, word[w2] );
+                strcpy(word[w2], word[w1]);
+                strcpy(word[w1], *temp);
+            }
+
+        } // end of inner loop counting through words
+    }// end of loops
+
+}
+

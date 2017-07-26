@@ -1,0 +1,34 @@
+Day 2: TUESDAY 20 JUNE 2017
+	Upper and Lower Level Math using Math.h
+	Arrays			-Excercises
+	For Loops		-Excercises
+Day 3: WEDNESDAY 21 JUNE 2017
+	Matrices
+	Print Formatting
+	Array Equality		-Excercises
+	(Strings & Str Hndlg	-Homework)
+Day 4: THURSDAY 22 JUNE 2017
+	Bubble Sort
+	Time Header
+	Pointer
+	(Functions		-Homework)
+Day 5: FRIDAY 23 JUNE 2017
+	Pointers
+	Time
+	Structures
+	Strings
+	(Sorting Methods, Time, UDF -Homework)
+
+Day 6: MONDAY 26 JUNE 2017
+	String Practice
+Day 7: TUESDAY 27 JUNE 2017
+	Structures
+	Abstract Data Type? 	(Video - Tape Player Idea)
+Day 8: WEDNESDAY 28 JUNE 2017
+	Heap 			(Video)
+	Array Excercises
+	rand() Excercises
+Day 9: THURSDAY 29 JUNE 2017
+	Double Pointer Notes
+Day 10: FRIDAY 30 JUNE 2017
+	Linked Lists	

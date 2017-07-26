@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1498149439 source:c:\users\jo\desktop\uh & official docs\uh classes\1.3 summer 2017\intro to c, dr martin huarte-espinosa\codeblocksexample\day3homework\main.c
+	<stdio.h>
+	<string.h>
+

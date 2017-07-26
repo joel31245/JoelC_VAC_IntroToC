@@ -1,0 +1,16 @@
+Slide 6:
+//DONE
+The swap doesnt save the new vars into the main. 
+Can be fixed with pointers or returning an array with and setting a and b as positions in array in main.
+Slide 5:
+a=77, x=77, y=123, y=999, x=123, a=77.
+Slide 4:
+*pa=44 *pb=66
+a=66  b=66
+Slide 3:
+4 double loops with dynamic parameters based on factors of n/2
+save chars and display as needed
+Slide 1:
+ Displays all elements of array
+ Displays ptr (array index) = (arrayValue)
+Slide 2:

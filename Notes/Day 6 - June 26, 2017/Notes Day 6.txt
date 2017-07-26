@@ -1,0 +1,8 @@
+USER DEFINED FUNCTIONS
+STRUCTURES
+
+User Defined Functions:
+Prototype Example (convention is to use prototyping)
+	int stdDev(int datas[], int entries);
+
+Structures:

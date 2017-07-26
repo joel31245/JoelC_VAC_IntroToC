@@ -1,0 +1,31 @@
+Structure in C
+(kind of like classes in java)
+can store variable types together.
+can store functions.
+
+SYNTAX
+(Within a header file)
+(Have to #include<user.h>
+struct user{
+	// members - variables stored in here
+	int userID;
+	char firstName;
+};
+
+(In main)
+
+#include<user.h>
+
+int main(){
+
+	struct user buddy;
+
+	buddy.userID = 1;
+	
+	puts("Enter the first name of user: ");
+	gets(buddy.firstName);
+
+	printf("User 1 ID is %d\n%c\n", buddy.userID, buddy.firstName);
+	
+	return 0;
+}

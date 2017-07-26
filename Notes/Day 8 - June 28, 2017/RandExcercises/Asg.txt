@@ -1,0 +1,286 @@
+revised: 10/17/2015 
+Puzzles B01 ... B15
+Part B — Random Numbers
+These puzzles involve random numbers. Random numbers are used in games, in simulation, in testing, and in many other situations. The random number generator rand() is part of the standard library. Include the header file stdlib.h in your source file when you use it. The prototype for it is: 
+int rand(void)
+Each call to rand()returns an integer randomly from the range 0..RAND_MAX. On many systems, RAND_MAX is 32767, but on some systems it can be much higher. Ideally, rand() should appear to return the result of throwing a 32768-sided die. The return value would be 0 to 32767, but the particular value would be completely unpredictable from throw to throw. In the GNU library, RAND_MAX is 2147483647, which is the largest signed integer representable in 32 bits. In Microsoft's VCC, RAND_MAX is 32767. 
+In fact, rand() uses an algorithm and so the integers it returns are completly predictable. If you know the algorithm and the previous value returned, the next value can easily be calculated. But for many purposes the sequence of numbers that rand() produces are scrambled up enough that they can be used as random numbers. 
+Because they are predictable, the numbers are called pseudo-random. The function srand() initializes rand(). 
+int srand( unsigned int seed )
+The seed starts the random number generator at an integer of your choice. From then on, the sequence is completely determined by the algorithm. Everytime you start the random number generator with the same seed, you get the same sequence. 
+To get a different sequence of pseudo-random numbers with different runs of a program, start each run with a different seed. Without initialization, rand() produces the same stream of pseudo-random numbers every time it is used. This can be desirable since sometimes you wish to test different algorithms using the same sequence of (pseudo-)random events. For example, to compare two sorting algorithms you would want to use the same sequence of unsorted numbers for each. 
+For many programs you would like a different stream of random numbers for each run. You could ask the user to supply a different seed for each run, but that would be awkward. A more convenient method is use the current time as the seed. The function call time(NULL) returns the number of seconds since 1 January 1970. To initialize the random number generator do this: 
+int srand( time(NULL) )
+You will (probably) need to include a header file at the top of your source code: 
+#include <time.h>
+rand() is not a very good pseudo-random number generator. For critical work, do not use it. Instead, use a function such as rand48() from a special purpose library. But rand() is a standard function, found on all systems, and works well enough for these puzzles.
+Caution: these puzzles are intended only for practice in programming. Random number generation is tricky. The rand() function (and functions that use it) is not not suitable for industrial-grade programs. For serious work, use a carefully tested numerical library. 
+
+Puzzle B01 — print N random integers, one per line
+[E-2] Write a main() program that prints N random integers one per line. Write the integers to standard output. On a Windows machine, write the integers to the DOS window. Here is the output of one run of the program:
+  4068
+   213
+ 12761
+  8758
+ 23056
+  7717
+ 15274
+ 24508
+  4056
+ 13304
+Copy-and-paste the following program into a source file and finish it using Bloodshed C++ or similar environment. 
+/* Puzzle B01 -- print N random integers */
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(int argc, char *argv[])
+{
+  int j;
+  int limit = 25;            /* Print this many random integers */
+  unsigned int seed = 123;   /* Initializer for rand() */
+
+  /* Use command line parameters if supplied */
+  if ( argc == 3 )
+  {
+    limit = atoi( argv[1] );
+    seed  = atoi( argv[2] );
+  }
+
+  /* Initialize the random number generator */
+  srand( seed );
+
+  /* Loop limit times, printing one random integer per iteration */
+  . . . .
+
+  printf("\n");
+  system("pause");
+  return 0;
+}
+In this program, the limit and the seed are command line parameters (although default values are supplied). See the answer to puzzle A22 for an explanation of these. 
+
+
+Puzzle B02 — determine experimentally how often rand() returns RAND_MAX
+[M-7] Write a main() program that generates N*RAND_MAX random integers. A uniform distribution is when each number is equally likely to occur. If the output of rand() is a uniform distribution then RAND_MAX should occur approximately N times. Sample output: 
+RAND_MAX occured 1012 times in 1000*RAND_MAX trials
+In this run of the program, rand() appears to be working correctly since you would expect RAND_MAX to occur about 1000 times in 1000*RAND_MAX trials.
+Caution: with a compiler with a large value for RAND_MAX (such as gcc), you might want to limit the number of trials to 10*RAND_MAX .
+
+
+Puzzle B03 — print N random integers in the range 0..9
+[E-2] Write a main() program that prints N random integers in the range 0..9, one per line. Think of this as repeatedly rolling a 10-sided die (with sides numbered 0 to 9). One run of the program outputs:
+6
+5
+4
+1
+5
+7
+4
+6
+8
+8
+Initialize the random number generator using: 
+  srand( time(NULL) );
+Write this program by making a copy of the previous answer, and modifying it. You should need to change only a few lines.
+
+
+Puzzle B04 — histogram N random integers in the range 0..9
+[M-14] Write a main() program that generates a large number of random integers in the range 0..9. A histogram is an array that holds the number of times each integer occurred. Initialize the random number generator using: srand( time(NULL) ). Here is one run of the program, for N==100 000 000:
+  0: 10001193
+  1: 10001982
+  2: 10003463
+  3: 10002130
+  4:  9999796
+  5: 10003199
+  6:  9997985
+  7: 10000221
+  8:  9997708
+  9:  9992323
+You should expect each histogram cell to contain about one tenth the total, about 10 000 000. Of course, there will be small deviations above and below that value. A really big deviation would be a sign that something is wrong. 
+
+
+Puzzle B05 — histogram and graph N random integers in the range 0..9
+[H-30]Modify the previous program so that it prints out a bar graph of stars in addition to printing out the values in each histogram bin. Write the program so that the bars of the graph span the page for whatever value of N is being used. To do this, look through the histogram for its maximum value. Divide the maximum number of stars by this value to find the ratio of stars to values. A sample output for N==500 is:
+  0 (   50):*****************************************
+  1 (   59):*************************************************
+  2 (   42):***********************************
+  3 (   49):****************************************
+  4 (   41):**********************************
+  5 (   53):********************************************
+  6 (   60):**************************************************
+  7 (   47):***************************************
+  8 (   54):*********************************************
+  9 (   45):*************************************
+This program is too long to write as one big main(). (My solution is about 30 lines long, not counting comments and blank lines.) Make the histogram array a global variable, and write three functions that use it: generate(), findMax(), and plot(). Write main() using these three functions. 
+
+
+Puzzle B06 — Generate random integers in the range MIN..MAX
+[H-3] Write a function int randInt(int min, int max) that returns a random integer in the range min..max (inclusive). 
+[M-20] Now write a main() program that uses the function to generate N random integers and tests that each one is in the proper range. Print each integer. Append a star to those integers that are out of range.
+Here is sample output of the program when the randInt() function is defective, for min==50 and max==100:
+  68   63   74   93   76   51   96   72   92   98
+  70   89   64   49*  76   67   95   75   88   88
+  79   72   52   87   65   74   84   69   75   73
+  58   76   94   61   67   90   84   55   95   51
+  59   60   80   87   98   67   82   59   56   81
+  59   93   86   62   83   93  101*  84   49*  89
+  59   69   60   58   80   98   88   97   64   54
+  65   77   60   63   52   52   97   71   91   71
+  72   55   93   97   69   74   86   56   62   76
+  55   86   82   73   64   63   74   54   83   93
+Of course, given the above display, which shows a defective randInt(), you would fix the function. But first you have to be sure that the display that shows the problem is itself working correctly! 
+
+
+Puzzle B07 — print N random doubles 0.0 <= d < 1.0
+[H-1] Write a function double randDouble() that evaluates to a random double precision value d in the range 0.0 <= d < 1.0 . Notice that the upper limit of 1.0 is NOT included in the range, but the lower limit of 0.0 is in the range.
+It is usual for random double generators to excluding the upper value, as here. This corresponds to the interval that in mathematics is written [0, 1) which means all values between zero and one, including the value zero, but excluding the value one. This range works out best in applications.
+Hint: your function will use rand() and RAND_MAX. Think carefully about any division you might do. 
+[E-8] Test your function by writing a main() that prints N random doubles, as here:
+ 0.7571411133 0.7846984863 0.8890686035 0.1686096191 0.5905151367
+ 0.9273681641 0.4562988281 0.7094421387 0.5547180176 0.3312988281
+ 0.1849670410 0.2119750977 0.4522094727 0.0114746094 0.2628173828
+ 0.9142150879 0.6651306152 0.0328063965 0.3609619141 0.7055969238
+ 0.3167419434 0.1512145996 0.3352050781 0.1481323242 0.8327941895
+ 0.2536621094 0.5308532715 0.6869201660 0.9351501465 0.5034790039
+ 0.9721984863 0.2064819336 0.5976562500 0.5966491699 0.2182312012
+ 0.5889282227 0.9966430664 0.0359497070 0.1654663086 0.4305114746
+ 0.9865722656 0.8287658691 0.5792236328 0.5723571777 0.1323852539
+ 0.5151367188 0.6348876953 0.6021118164 0.8298034668 0.9319458008
+ 
+A small display such as the above would not show a problem, even if your generator is defective and sometimes produces an out-of-range value. A better test would be to generate several million values, testing that each one is in range. 
+
+
+Puzzle B08 — print N random doubles MIN <= d < MAX
+[H-1] Write a function double randDoubleRange(double min, double max) that returns a random double precision floating point value d in the range min <= d < max. As previously, the range includes min, but excludes max. This is the usual way that random number generators work. Test your function by writing a main(). 
+[E-8]Example output from a program that tests this function for the range 5.0 <= d < 10.0 is:
+ 5.0062561035 7.8178405762 5.9664916992 9.0435791016 7.9249572754
+ 7.3992919922 6.7514038086 9.4796752930 9.1140747070 8.7329101563
+ 5.8705139160 9.2945861816 8.5523986816 7.5675964355 6.5199279785
+ 5.0749206543 5.4570007324 6.8222045898 5.7365417480 5.8294677734
+ 9.9424743652 7.2283935547 5.5953979492 5.0233459473 5.0445556641
+ 6.8893432617 7.6582336426 7.8558349609 8.0087280273 8.0357360840
+ 6.8066406250 5.7577514648 6.1254882813 7.1257019043 9.0142822266
+ 7.5854492188 9.9497985840 8.7576293945 6.7277526855 5.8448791504
+ 8.2864379883 7.4594116211 5.3176879883 8.4986877441 7.5239562988
+  
+
+
+Puzzle B09 — out of N random doubles 0 <= d < 100 print the one closest to 50
+[M-12] Use randomDoubleRange() to generate N random doubles in the range 0.0 <= d < 100.0. Print the value that is closest to 50.0. As N gets larger, the output should get closer and closer to 50.0, until finally 50 is reached, if that is possible. Our randomDoubleRange() has large gaps between the values it can generate, and not all output values are possible, even if they are whole numbers. 
+Example output, for N=1000 is: 
+Closest: 49.841309; difference: 0.158691
+Example output, for N=10000 is:
+Closest: 50.003052; difference: 0.003052
+You will need the function 
+ double fabs(double x)
+Which returns the absolute value of its argument. Repeat the experiment for values other than 50.0. Try 51.0, 15.0, and a few others. 
+
+
+Puzzle B10 — generate random doubles 0<=d<100 until one is within epsilon of 50.0
+[M-15] Write a main() program that keeps generating random doubles in the range 0.0 <= d < 100.0 until a random double is generated that is within a small value e of 50.0. In other words, stop when a value d has been generated such that |d - 50.0| < e. Example output is:
+Target: 50.000000;  Epsilon: 0.010000
+Closest value: 50.003052; occurred on trial: 2444
+It would be wise to put an upper limit on the number of trials just in case you picked an e that never can be reached. Hard-code the parameters of the program: 
+const int limit = 10000000 ;
+const double MIN=0.0, MAX= 100.0;
+const double TARGET=50.0;
+const double EPSILON= 1.0e-2;
+
+
+Puzzle B11 — generate and print random characters 'a' .. 'z'
+[M-1] Write function char randChar() that evaluates to a random character 'a'..'z' each time it is called. Do this by adding a random integer to character 'a'.
+[M-20]Print out about 500 of these characters, nicely arranged into groups of five. Sample output:
+aofvp mjxvt ewsnh acjde zldaa jnopp erljb puunh wsyyo dmgwf
+uvzzp kghva jcrba xhhpr vsmft mlytc pktpo jdflu nztie rmbsn
+dydxs hlbzr dwvpe evmen tkhor tsmdj vanrl cyxoi mjwil hzhto
+ftvkn xazob nfvqr fvdct iyhid tvspt gdabu wfdoa cltro blfsh
+lgpnq enzsy eiezl zcqcl ybxhf tkfqp lmpqw vqsoj etoxg epspj
+mctpq rudow xpsbr ziohe cwwte icbqv olkhm nditi vywsh ydbun
+pybwq icnfh xorcm jmunj rnpka scqwm tmjuo jyqej dtypa ibqdw
+wpswa dsqfb eqiij ruunp uxdqk gdwbl ohofi cvdhu xutpj wfwfg
+ozbcn lcgxg ddycb bixkl yvnvs kgany kgpgr ylxay puodf jakcr
+wbvrr unrdr suawq scoyb hdzqh xjsfe gnxcx lcuez uwfla tckiz
+The output part of this program is by far the hardest part. Skip it, or use simpler output if you want. Use randInt() from puzzle 6 for generating the characters.
+
+
+Puzzle B12 — generate and print N words of random characters
+[M-25] Write a program that generates and prints N random-sized words consisting of randomly selected characters. The word length should be 1 <= length <= max. Print no more than 50 characters per line. Typical output is:
+k jtdxgon ikc kqv fbb cdavsv jczhqe bos tpprmtie
+m xqh mwykru ttp etzk rimfoopn wyzqp bzqmf vqzd
+vq zlfnjwou gdq beicina nyrgcn m leerxhld v
+xolcpt goqab irpmk jkjosv cvaqrvv ekui dbhpbsth
+kaii xtsszadp dr v xg hal lsdnde xhhb dlz mqmioh
+xykazi k om pjqyz uh qcelyco awlg c eloj ykiuxh
+luww zx gbvgufm qow totv x v gwasab bng d rgglj
+dfahfjya tpcpp z vnowd kpp upvsyffk vengu o ruoj
+nwzunrzi o jytw vlfu vproctwj de ghwy vilyb
+dtdunaw fgdhbzc kpfvzkq jiyvbae l d wshu hub
+jdcus vynq ipg mioc ycyq uzei rhav ykjgejg etoz
+wjjl ebsqbrk
+
+
+
+Puzzle B13 — Generate and print N random sentences
+[M-40] Write a program that generates and prints N random-length sentences of words consisting of randomly selected characters. Pick a maximum length for the sentences and for the words. Start each sentence with a capital letter and end it with a period. Occasionally capitalize some other words. Print no more than 50 characters per line. Typical output is:
+Gu. Eelraij lyhyqlw Mytaum Lp g zo. Sgzxx u. Ja b
+Ykcimhry awd f. Mcityv mjeijkq Xc alhinf. Jcovwd
+ylsso cpfanfoi Xf v. Hrpylkf c xvvqu aywiz as
+hcivsjg Hcuzo k. Zchxu. Msntyjm mycrir rlkbhx
+lcotf rancd glbejk okfky dpdf. Etw mup wtyqll
+umugu x qpkakzcr aukogho zxjioevs. Ix qxmrosy.
+Xvvuekmz. Gz yflrpmg puh. Tyygsx d Hadxud ci rum.
+Zcqtbf. O. Oqigu hjxpfjy kaxovequ zpl Njz Vai yj
+bq. Qdbgxv jozlpf aolt. Bsn yl Mhssdyx syir pnw
+bwln dy dc. Nt jsdr aoz Mwadxnre xvlw c waljah.
+Rgyyk qpdaze sgpsd gbtg i ixknsp ugflgzev. K yxer
+bdaubiq. Qrauiuxp blax knf fjq zjhvbze szgw fssif
+ao. Rcakjnw Tpuk rnu zscze. Ksjcp. Cmwpxeyz
+zwfpkyro vp abcqyei ftl miwrsbn. Z jn zufhbosw
+Rjrz l pt. Iowqd fjbwz orodgm Eh. Tzr. Dzlariy
+luoz olmuxpal. Bay nzzyk vv O xisfibp Bfymeid
+Rofvg lblai. Evwhrn kdo hl yywg zaiupyep. Gwysplk
+yqcgatv Lnnal. Ba crcujcn hfggep Pakcs tta
+feqjsihb dnrlcvsx. Xvqvs jmpsziwm pamgv.
+Copy the previous program and modify it so that it meets the specifictions of this puzzle. If you do this, you will write many fewer than the 40-line length of the finished program. 
+
+
+Puzzle B14 — generate words of five random characters until the word "hello" occurs
+[M-15] Write a main() program that generates 5-character random words until the word "hello" is generated. Use the randWord() function from B12. So that the user can see that the program is working, print out one dot for every 100,000 words generated. Typical output is:
+..................................................
+..................................................
+..................................................
+..............
+word = hello, count = 16479997
+A randomly generated "hello" should happen once per every 26*26*26*26*26 words generated, about once per 11,881,376 random words. 
+Use the function int strcmp( char*, char* ) to compare a randomly generated word with "hello". That function returns 0 when the two strings are equal.
+
+
+Puzzle B15 — print an N by N square of random dots and stars 
+[M-8] Write a program that generates and prints N lines of N characters. The characters are randomly chosen dots and stars. Make about 1 character out of 13 a star. Typical output is:
+*..............*.......*
+*.........*.............
+...........*...**.......
+........................
+.*.........*............
+...........*............
+............*..*........
+..............**.....*..
+...*....................
+.....*..................
+.......................*
+.............*..........
+.........*....*.........
+............*...........
+........*.*.......*....*
+..................*.....
+..................*.....
+......**...........*....
+......*.......*....*....
+......*......*..........
+..............*.....*...
+.......................*
+..*..*..................
+....*...................
+
+
+ — Return to the main contents page 
